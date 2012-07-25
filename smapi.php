@@ -5,7 +5,7 @@
 
 class SMapi {
 
-    const VERSION = 'v2.0.1';
+    const VERSION = 'v2.0.2';
 
     public static $apiUrl = 'api.serpmetrics.com';
     public static $userAgent = 'SERPmetrics PHP5 Library';
@@ -130,6 +130,25 @@ class SMapi {
     public function credit() {
         $options = array(
             'path' => '/users/credit',
+            );
+        $res = self::rest($options);
+        return $res;
+    }
+
+    /**
+     * Get trended flux data for a given engine_code
+     *
+     * @param string $engine_code
+     * @param string $type
+     * @return mixed
+     */
+    public function flux($engine_code, $type = 'daily') {
+        $options = array(
+            'path' => '/flux/trend',
+            'params' => array(
+                'engine_code' => $engine_code,
+                'type' => $type
+                )
             );
         $res = self::rest($options);
         return $res;
