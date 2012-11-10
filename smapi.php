@@ -79,6 +79,44 @@ class SMapi {
         return $res;
     }
 
+
+    /**
+     * Adds a new keyword to the priority queue, usage as per add()
+     */
+    public function priority_add($keyword, $engines) {
+        if (!is_array($engines) && !empty($engines)) {
+            $engines = array($engines);
+        }
+
+        $options = array(
+            'path' => '/priority/add',
+            'params' => array(
+                'keyword' => $keyword,
+                'engines' => $engines
+                )
+            );
+        $res = self::rest($options);
+        return $res;
+    }
+
+    /**
+     * Gets status for a given $priority_id
+     *
+     * @param string $priority_id
+     * @return mixed
+     */
+    public function priority_status($priority_id) {
+        $options = array(
+            'path' => '/priority/status',
+            'params' => array(
+                'priority_id' => $priority_id
+                )
+            );
+        $res = self::rest($options);
+        return $res;
+    }
+
+
     /**
      * Gets last $limit SERP check timestamps/ids for keyword/engine combination. $engine
      * should be in the format {engine}_{locale} (for example google_en-us).
