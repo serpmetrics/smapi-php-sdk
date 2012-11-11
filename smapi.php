@@ -5,7 +5,7 @@
 
 class SMapi {
 
-    const VERSION = 'v2.0.2';
+    const VERSION = 'v2.0.3';
 
     public static $apiUrl = 'api.serpmetrics.com';
     public static $userAgent = 'SERPmetrics PHP5 Library';
@@ -63,7 +63,7 @@ class SMapi {
     /**
      * Remove a keyword from the queue.
      * Note: this REMOVES a keyword entirely, including ALL engines assigned. To update
-     *       a keywords engine list, simply call addKeyword() with the new engine list.
+     *       a keywords engine list, simply call add() with the new engine list.
      *
      * @param string $keyword_id
      * @return mixed
@@ -260,7 +260,7 @@ class SMapi {
             $this->_http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
             if ($error = curl_error($curl)) {
-                trigger_error('SerpMetrics: curl error: ' . curl_error($curl), E_USER_WARNING);
+                trigger_error('SMapi: curl error: ' . curl_error($curl), E_USER_WARNING);
                 if (!self::_exponentialBackoff($attempt, self::$retries)) {
                     return false;
                 }
