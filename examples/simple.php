@@ -31,7 +31,7 @@ if ($res['status'] == 'ok') {
 
 
 // check a keyword pair for new data
-$res = $smapi->check('flights to nyc', 'google_en-us');
+$res = $smapi->check($keyword_id, 'google_en-us');
 if ($res['status'] == 'ok') {
     foreach ($res['data'] as $timestamp => $check_id) {
         // check each against db for unprocessed serps
