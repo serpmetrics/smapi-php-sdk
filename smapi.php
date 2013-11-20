@@ -5,7 +5,7 @@
 
 class SMapi {
 
-    const VERSION = 'v2.0.3';
+    const VERSION = 'v2.1.0';
 
     public static $apiUrl = 'api.serpmetrics.com';
     public static $userAgent = 'SERPmetrics PHP5 Library';
@@ -81,9 +81,48 @@ class SMapi {
 
 
     /**
+     * Adds a new keyword to the delayed queue, usage as per add()
+     */
+    public function delayed_add($keyword, $engines, $location = null) {
+        if (!is_array($engines) && !empty($engines)) {
+            $engines = array($engines);
+        }
+
+        $options = array(
+            'path' => '/delayed/add',
+            'params' => array(
+                'keyword' => $keyword,
+                'engines' => $engines,
+                'location' => $location
+                )
+            );
+        $res = self::rest($options);
+        return $res;
+    }
+
+
+    /**
+     * Gets status for a given $delayed_id
+     *
+     * @param string $delayed_id
+     * @return mixed
+     */
+    public function delayed_status($delayed_id) {
+        $options = array(
+            'path' => '/delayed/status',
+            'params' => array(
+                'delayed_id' => $priority_id
+                )
+            );
+        $res = self::rest($options);
+        return $res;
+    }
+
+
+    /**
      * Adds a new keyword to the priority queue, usage as per add()
      */
-    public function priority_add($keyword, $engines) {
+    public function priority_add($keyword, $engines, $location = null) {
         if (!is_array($engines) && !empty($engines)) {
             $engines = array($engines);
         }
@@ -92,7 +131,8 @@ class SMapi {
             'path' => '/priority/add',
             'params' => array(
                 'keyword' => $keyword,
-                'engines' => $engines
+                'engines' => $engines,
+                'location' => $location
                 )
             );
         $res = self::rest($options);
