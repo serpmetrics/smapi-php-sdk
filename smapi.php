@@ -43,7 +43,7 @@ class SMapi {
      * @param array $engines
      * @return mixed
      */
-    public function add($keyword, $engines) {
+    public function add($keyword, $engines, $location = null) {
         if (!is_array($engines) && !empty($engines)) {
             $engines = array($engines);
         }
@@ -52,7 +52,8 @@ class SMapi {
             'path' => '/keywords/add',
             'params' => array(
                 'keyword' => $keyword,
-                'engines' => $engines
+                'engines' => $engines,
+                'location' => $location
                 )
             );
         $res = self::rest($options);
