@@ -5,7 +5,7 @@
 
 class SMapi {
 
-    const VERSION = 'v2.1.0';
+    const VERSION = 'v2.1.1';
 
     public static $apiUrl = 'api.serpmetrics.com';
     public static $userAgent = 'SERPmetrics PHP5 Library';
@@ -43,7 +43,7 @@ class SMapi {
      * @param array $engines
      * @return mixed
      */
-    public function add($keyword, $engines, $location = null) {
+    public function add($keyword, $engines, $location = null, $device = 'desktop') {
         if (!is_array($engines) && !empty($engines)) {
             $engines = array($engines);
         }
@@ -53,7 +53,8 @@ class SMapi {
             'params' => array(
                 'keyword' => $keyword,
                 'engines' => $engines,
-                'location' => $location
+                'location' => $location,
+                'device' => $device
                 )
             );
         $res = self::rest($options);
@@ -84,7 +85,7 @@ class SMapi {
     /**
      * Adds a new keyword to the delayed queue, usage as per add()
      */
-    public function delayed_add($keyword, $engines, $location = null) {
+    public function delayed_add($keyword, $engines, $location = null, $device = 'desktop') {
         if (!is_array($engines) && !empty($engines)) {
             $engines = array($engines);
         }
@@ -94,7 +95,8 @@ class SMapi {
             'params' => array(
                 'keyword' => $keyword,
                 'engines' => $engines,
-                'location' => $location
+                'location' => $location,
+                'device' => $device
                 )
             );
         $res = self::rest($options);
@@ -123,7 +125,7 @@ class SMapi {
     /**
      * Adds a new keyword to the priority queue, usage as per add()
      */
-    public function priority_add($keyword, $engines, $location = null) {
+    public function priority_add($keyword, $engines, $location = null, $device = 'desktop') {
         if (!is_array($engines) && !empty($engines)) {
             $engines = array($engines);
         }
@@ -133,7 +135,8 @@ class SMapi {
             'params' => array(
                 'keyword' => $keyword,
                 'engines' => $engines,
-                'location' => $location
+                'location' => $location,
+                'device' => $device
                 )
             );
         $res = self::rest($options);
