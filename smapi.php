@@ -83,6 +83,53 @@ class SMapi {
 
 
     /**
+     * Appends engines to an existing keyword_id, leaving the existing engine list in-tact
+     *
+     * @param string $keyword_id
+     * @param array $engines
+     * @return mixed
+     */
+    public function append_engines($keyword_id, $engines) {
+        if (!is_array($engines) && !empty($engines)) {
+            $engines = array($engines);
+        }
+        
+        $options = array(
+            'path' => '/keywords/append_engines',
+            'params' => array(
+                'keyword_id' => $keyword_id,
+                'engines' => $engines
+                )
+            );
+        $res = self::rest($options);
+        return $res;
+    }
+  
+
+    /**
+     * Removes engines from an existing keyword_id.
+     *
+     * @param string $keyword_id
+     * @param array $engines
+     * @return mixed
+     */
+    public function remove_engines($keyword_id, $engines) {
+        if (!is_array($engines) && !empty($engines)) {
+            $engines = array($engines);
+        }
+        
+        $options = array(
+            'path' => '/keywords/remove_engines',
+            'params' => array(
+                'keyword_id' => $keyword_id,
+                'engines' => $engines
+                )
+            );
+        $res = self::rest($options);
+        return $res;
+    } 
+    
+    /**
      * Adds a new keyword to the delayed queue, usage as per add()
      */
     public function delayed_add($keyword, $engines, $location = null, $device = 'desktop') {
