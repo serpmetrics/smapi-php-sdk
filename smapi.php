@@ -161,7 +161,7 @@ class SMapi {
         $options = array(
             'path' => '/delayed/status',
             'params' => array(
-                'delayed_id' => $priority_id
+                'delayed_id' => $delayed_id
                 )
             );
         $res = self::rest($options);
@@ -293,7 +293,7 @@ class SMapi {
     protected static function _generateSignature($credentials = null) {
         $ts = time();
         if (empty($credentials)) {
-            $credentials = $this->_credentials;
+            $credentials = self::$_credentials;
         }
         $signature = base64_encode(hash_hmac('sha256', $ts, $credentials['secret'], true));
 
@@ -319,7 +319,7 @@ class SMapi {
         $options = $options + $defaults;
 
         if (empty($credentials)) {
-            $credentials = $this->_credentials;
+            $credentials = self::$_credentials;
         }
 
         if (!empty($options['params'])) {
@@ -348,7 +348,7 @@ class SMapi {
                 ));
 
             $r = curl_exec($curl);
-            $this->_http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            self::$_http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
             if ($error = curl_error($curl)) {
                 trigger_error('SMapi: curl error: ' . curl_error($curl), E_USER_WARNING);
@@ -369,7 +369,7 @@ class SMapi {
      * @return integer
      */
     public function httpStatus() {
-        return $this->_http_status;
+        return self::$_http_status;
     }
 
 
