@@ -5,7 +5,7 @@
 
 class SMapi {
 
-    const VERSION = 'v2.1.1';
+    const VERSION = 'v2.1.2';
 
     public static $apiUrl = 'api.serpmetrics.com';
     public static $userAgent = 'SERPmetrics PHP5 Library';
@@ -290,13 +290,9 @@ class SMapi {
      * @param array $credentials
      * @return array
      */
-    protected static function _generateSignature($credentials = null) {
+    protected static function _generateSignature($credentials) {
         $ts = time();
-        if (empty($credentials)) {
-            $credentials = self::$_credentials;
-        }
         $signature = base64_encode(hash_hmac('sha256', $ts, $credentials['secret'], true));
-
         return array('ts'=>$ts, 'signature'=>$signature);
     }
 
@@ -319,7 +315,7 @@ class SMapi {
         $options = $options + $defaults;
 
         if (empty($credentials)) {
-            $credentials = self::$_credentials;
+            $credentials = $this->_credentials;
         }
 
         if (!empty($options['params'])) {
@@ -348,7 +344,7 @@ class SMapi {
                 ));
 
             $r = curl_exec($curl);
-            self::$_http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            $this->_http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
             if ($error = curl_error($curl)) {
                 trigger_error('SMapi: curl error: ' . curl_error($curl), E_USER_WARNING);
@@ -369,7 +365,7 @@ class SMapi {
      * @return integer
      */
     public function httpStatus() {
-        return self::$_http_status;
+        return $this->_http_status;
     }
 
 
