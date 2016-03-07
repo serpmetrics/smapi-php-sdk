@@ -252,6 +252,29 @@ class SMapi {
 
 
     /**
+     * Allows you to check if a given keyword phrase+location+device combination exists under your account.
+     * If so, it will return the engines associated.
+     *
+     * @param string $keyword
+     * @param string $location
+     * @param string $device
+     * @return mixed
+     */
+    public function exists($keyword, $location = null, $device = null) {
+        $options = array(
+            'path' => '/keywords/exists',
+            'params' => array(
+                'keyword' => $keyword,
+                'location' => $location,
+                'device' => $device
+                )
+            );
+        $res = self::rest($options);
+        return $res;
+    }
+
+
+    /**
      * Get current credit balance
      *
      * @return mixed
