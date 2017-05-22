@@ -5,7 +5,7 @@
 
 class SMapi {
 
-    const VERSION = 'v2.1.2';
+    const VERSION = 'v2.1.3';
 
     public static $apiUrl = 'api.serpmetrics.com';
     public static $userAgent = 'SERPmetrics PHP5 Library';
@@ -250,6 +250,22 @@ class SMapi {
         return $res;
     }
 
+    /**
+     * Get raw HTML for given id.
+     *
+     * @param string $id
+     * @return mixed
+     */
+    public function html($check_id) {
+        $options = array(
+            'path' => '/fetch/html',
+            'params' => array(
+                'check_id' => $check_id
+            )
+        );
+        $res = self::rest($options, null, true);
+        return $res;
+    }
 
     /**
      * Allows you to check if a given keyword phrase+location+device combination exists under your account.
@@ -327,7 +343,7 @@ class SMapi {
      * @param array $credentials
      * @return mixed
      */
-    public function rest($options, $credentials = array()) {
+    public function rest($options, $credentials = array(), $raw = false) {
         $defaults = array(
             'method' => 'POST',
             'url' => self::$apiUrl,
@@ -378,7 +394,8 @@ class SMapi {
             }
             break;
         }
-
+        
+        if ($raw) return $r;
         return call_user_func_array(self::$serializer[1], array($r, true));
     }
 
